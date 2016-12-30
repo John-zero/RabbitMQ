@@ -1,0 +1,17 @@
+build/
+bin/
+*.jar
+*.war
+*.class
+
+#RabbitMQ
+logs/
+
+#IDE
+.project
+.settings
+.classpath
+.idea/
+*.iml
+*.eml
+*.log
