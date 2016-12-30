@@ -18,9 +18,9 @@ public class Send
     {
         ConnectionFactory factory = new ConnectionFactory();
         // 主机
-        factory.setHost("192.168.3.109");
+        factory.setHost("192.168.3.105");
         // 端口
-        factory.setPort(15672);
+        factory.setPort(5672);
         // 账号和密码
         factory.setUsername("admin");
         factory.setPassword("admin_pwd");
