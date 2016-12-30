@@ -11,21 +11,36 @@ import java.util.concurrent.TimeoutException;
  */
 public class Send
 {
+    // 队列名
     private final static String QUEUE_NAME = "HelloWorld";
 
     public static void main(String[] argv) throws java.io.IOException, TimeoutException
     {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        // 主机
+        factory.setHost("192.168.3.109");
+        // 端口
+        factory.setPort(15672);
+        // 账号和密码
+        factory.setUsername("admin");
+        factory.setPassword("admin_pwd");
+        // 连接
         Connection connection = factory.newConnection();
+        // 频道
         Channel channel = connection.createChannel();
-
+        // 队列
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+
+        // 消息
         String message = "Hello World!";
+        // 往队列中发出一条消息
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+
         System.out.println(" [x] Sent '" + message + "'");
 
+        // 关闭频道
         channel.close();
+        // 关闭连接
         connection.close();
     }
 
