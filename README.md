@@ -1,11 +1,11 @@
 # RabbitMQ
 
 RabbitMQ 初步拟定学习方向<br> 
-　　　　1. RabbitMQ 服务器搭建<br> 
-	2. HelloWorld 入门 (测试搭建是否OK)<br> 
-	3. 玩法 http://www.rabbitmq.com/getstarted.html<br> 
-		"Hello World!"<br> 
-		Work queues<br> 
+　　1. RabbitMQ 服务器搭建<br> 	
+　　2. HelloWorld 入门 (测试搭建是否OK)<br> 	
+　　3. 玩法 http://www.rabbitmq.com/getstarted.html<br> 
+　　　　"Hello World!"<br> 
+　　　　Work queues<br> 
 		Publish/Subscribe<br> 
 		Routing<br> 
 		Topics<br> 
