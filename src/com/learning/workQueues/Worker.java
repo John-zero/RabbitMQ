@@ -1,4 +1,4 @@
-package com.workQueues;
+package com.learning.workQueues;
 
 import com.rabbitmq.client.*;
 

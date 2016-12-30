@@ -1,6 +1,5 @@
-package com.workQueues;
+package com.learning.workQueues;
 
-import java.io.IOException;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
