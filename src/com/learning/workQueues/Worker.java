@@ -17,7 +17,7 @@ public class Worker
     {
         ConnectionFactory factory = new ConnectionFactory();
         // 主机
-        factory.setHost("192.168.3.109");
+        factory.setHost("192.168.3.105");
         // 端口
         factory.setPort(5672);
         // 账号和密码
