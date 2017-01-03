@@ -58,7 +58,8 @@ public class ReceiveLogsToFile
                 FileOutputStream fileOutputStream = null;
                 try
                 {
-                    String dir = ReceiveLogsToFile.class.getClassLoader().getResource("").getPath();
+//                    String dir = ReceiveLogsToFile.class.getClassLoader().getResource("").getPath();
+                    String dir = "W:\\logs";
                     String logFileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
                     fileOutputStream = new FileOutputStream(new File(dir, logFileName + ".txt"), true);
