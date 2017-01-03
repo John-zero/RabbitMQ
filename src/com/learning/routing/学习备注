@@ -1,0 +1,8 @@
+RabbitMQ 之 Routing 入门
+    http://www.rabbitmq.com/tutorials/tutorial-four-java.html
+
+转发器类型: (direct)
+    direct
+    topic
+    headers
+    fanout

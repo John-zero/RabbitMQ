@@ -1,0 +1,8 @@
+RabbitMQ 之 Topics 入门
+    http://www.rabbitmq.com/tutorials/tutorial-five-java.html
+
+转发器类型: (topic)
+    direct
+    topic
+    headers
+    fanout

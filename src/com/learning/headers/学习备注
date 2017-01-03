@@ -1,0 +1,8 @@
+RabbitMQ 之  入门
+
+
+转发器类型: (headers)
+    direct
+    topic
+    headers
+    fanout
