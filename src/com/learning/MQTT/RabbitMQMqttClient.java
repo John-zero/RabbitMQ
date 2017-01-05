@@ -13,12 +13,12 @@ public class RabbitMQMqttClient
     {
         RabbitMQMqttClient rabbitMQMqttClient = new RabbitMQMqttClient();
 
-        String HOST = "tcp://192.168.3.105:61613";
+        String HOST = "tcp://192.168.3.105:1883";
         String clientId = "client_105";
         MqttCallback callback = new RabbitMQMqttClientCallback();
         String topIc = "RabbitMQ_MQTT_105";
-        String userName = "";
-        String password = "";
+        String userName = "admin";
+        String password = "admin_pwd";
         MqttClient mqttClient = rabbitMQMqttClient.connect(HOST, clientId, callback, topIc, userName, password);
 
         if(mqttClient != null)
@@ -76,7 +76,7 @@ public class RabbitMQMqttClient
         {
             mqttClient.subscribe(topIc, qos);
 
-            System.out.println(String.format("订阅主题, topIc: %s, qos: $s", topIc, qos));
+            System.out.println(String.format("订阅主题, topIc: %s, qos: %s", topIc, qos));
         }
         catch (Exception e)
         {
