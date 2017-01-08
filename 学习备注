@@ -1,4 +1,58 @@
 GitHub 官网 DEMO
     https://github.com/rabbitmq/rabbitmq-tutorials
 
+1. 基本概念
+    Producer 生产者
+    Exchange 交换器 (路由)
+        元数据(exchange 名字、类型和属性等)
+        内部实现为保存 Binding 关系的查找表
+        RoutingKey
+            最大长度 255 字节
+        BindingKye
+            最大长度 255 字节
+        Channel
+            负责按照 RoutingKey 将 Message 投递给 Queue
+            Channel 是真实TCP连接之上的虚拟连接, Channel 都有唯一ID,
+            一个 Channel 只能被一个线程使用, 但是一个线程上允许使用多个 Channel, 多线程共享 Socket
+            AMQP 命令都是通过 Channel 发送的, 所有能保证发送的 Message 是有序的
+            0号的 Channel 处理所有对于当前 Connection 全局有效的帧, 其余1-65535号用于处理和特定的 Chanel 相关的帧
+            模型如下:
+                    0号 帧      frames      frames
+                +-----------+-----------+-----------+-----------+
+                |  channel  |  channel    (1-65535)             |
+                +-----------+-----------+-----------+-----------+
+                |                     socket                    |
+                +-----------------------------------------------+
 
+    Queue 队列
+        元数据(queue 名字和属性等)
+        队列具有自己的 Erlang 进程
+        队列的 Message 数量上限取决于机器的内存大小, 但是 Message 数量过多会导致处理效率下降
+    Consumer 消费者
+        Consumer 可以通过 Basic.Reject (同时设置 requeue=false)拒绝 Message, 那么该 Message 将被放入 "dead letter" 队列
+
+    Message
+        根据 AMQP 协议规定, 消息体的大小由 64-bit 的值来指定
+
+    Binding
+        元数据(存放路由关系的查找表)
+
+
+    Broker
+        指一个或者多个 Erlang Node 的逻辑分组, 而 Node 上运行着 RabbitMQ 应用程序
+    Cluster 集群
+        是在 Broker 的基础上增加了 Node 之间共享原数据的约束
+    VHost
+        可以理解为虚拟 Broker, 内部均含有独立的 queue、exchange 和 binding 等, 并且最重要的是拥有独立权限系统
+        元数据(vhost 范围内针对前三者的名字空间约束和安全属性设置)
+
+    RAM
+        内存
+    DISK
+        磁盘
+
+    RAM Node
+        仅将 fabric (即 queue、exchange 和 binding 等 RabbitMQ 基础构件) 相关元数据保存到内存中
+        唯一会存储到磁盘上的元数据是 Cluster 中使用的 Disk Node 的地址, 要求至少存在一个 Disk Node
+    Disk Node
+        会在内存和磁盘中均进行存储
