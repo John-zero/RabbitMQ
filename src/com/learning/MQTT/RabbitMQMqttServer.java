@@ -18,11 +18,11 @@ public class RabbitMQMqttServer
     {
         RabbitMQMqttServer rabbitMQMqttServer = new RabbitMQMqttServer();
 
-        String HOST = "tcp://192.168.3.105:61613";
+        String HOST = "tcp://192.168.3.105:1883";
         String clientId = "server_105";
         MqttCallback callback = new RabbitMQMqttServerCallback();
-        String userName = "";
-        String password = "";
+        String userName = "admin";
+        String password = "admin_pwd";
         MqttClient mqttClient = rabbitMQMqttServer.connect(HOST, clientId, callback, userName, password);
 
         if(mqttClient == null)
