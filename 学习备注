@@ -1,10 +1,13 @@
 GitHub 官网 DEMO
     https://github.com/rabbitmq/rabbitmq-tutorials
 
+0. 经验
+    查看 RabbitMQ 服务运行状态: ps -ef | grep rabbit
+
 1. 基本概念
     Producer 生产者
     Exchange 交换器 (路由)
-        元数据(exchange 名字、类型和属性等)
+        元数据(exchange 名字、类型和属性(可持久化等))
         内部实现为保存 Binding 关系的查找表
         RoutingKey
             最大长度 255 字节
@@ -25,8 +28,8 @@ GitHub 官网 DEMO
                 +-----------------------------------------------+
 
     Queue 队列
-        元数据(queue 名字和属性等)
-        队列具有自己的 Erlang 进程
+        元数据(queue 名字和属性(是否可持久化, 是否自动删除等))
+        队列具有自己的 Erlang 进程, 是 RabbitMQ 的内部属性
         队列的 Message 数量上限取决于机器的内存大小, 但是 Message 数量过多会导致处理效率下降
     Consumer 消费者
         Consumer 可以通过 Basic.Reject (同时设置 requeue=false)拒绝 Message, 那么该 Message 将被放入 "dead letter" 队列
@@ -35,7 +38,7 @@ GitHub 官网 DEMO
         根据 AMQP 协议规定, 消息体的大小由 64-bit 的值来指定
 
     Binding
-        元数据(存放路由关系的查找表)
+        元数据(存放路由关系的查找表(如何将消息路由到队列))
 
 
     Broker
@@ -44,7 +47,7 @@ GitHub 官网 DEMO
         是在 Broker 的基础上增加了 Node 之间共享原数据的约束
     VHost
         可以理解为虚拟 Broker, 内部均含有独立的 queue、exchange 和 binding 等, 并且最重要的是拥有独立权限系统
-        元数据(vhost 范围内针对前三者的名字空间约束和安全属性设置)
+        元数据(vhost 范围内针对前三者的名字空间约束和安全属性设置, 为 VHost 内的队列, 交换器和绑定提供命名空间和安全属性)
 
     RAM
         内存
@@ -52,7 +55,24 @@ GitHub 官网 DEMO
         磁盘
 
     RAM Node
-        仅将 fabric (即 queue、exchange 和 binding 等 RabbitMQ 基础构件) 相关元数据保存到内存中
+        将节点内所有队列, 交换器, 绑定, 用户, 权限 和 VHost 的元数据定义都仅存储在内存中
         唯一会存储到磁盘上的元数据是 Cluster 中使用的 Disk Node 的地址, 要求至少存在一个 Disk Node
     Disk Node
+        将元数据存储在磁盘中
         会在内存和磁盘中均进行存储
+
+2. 单节点 RabbitMQ
+    AMQP 协议是单向通信, 不过可以通过构建 RCP 模式来构建双向通信
+
+
+3. 高可用性 RabbitMQ
+    3.1 集群 Cluster
+        RabbitMQ 最优秀的功能之一就是内建集群
+        要求集群中至少有一个磁盘节点(一般建议是配置2个以上磁盘节点), 其他为内存节点
+        在磁盘节点只有一个并且崩溃的情况下:
+            集群可以继续路由消息, 但是不能: A. 创建队列, B. 创建交换器, C. 创建绑定, D. 添加用户, E. 更改权限, F. 添加和删除集群节点
+        RabbitMQ 默认情况下不会将队列内容和状态复制到所有的节点上, 原因是: 1. 存储空间; 2. 性能
+        3.1.1 单机节点集群 (单台服务器)
+        3.1.2 多机节点集群 (多台服务器)
+    3.2 扩大程序规模以提升性能
+
